@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AgroNews - Notícias do Agronegócio</title>
+    
+    <link
+      href="https://fonts.googleapis.com/css2?family=Poppins:wght@100;200;300;400;500;600;700;800;900&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="icon" href="assets/images/favicon_green.ico" type="image/x-icon">
+
+    <!-- Bootstrap core CSS -->
+    <link href="vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet" />
+
+    <!-- Additional CSS Files -->
+    <link rel="stylesheet" href="assets/css/fontawesome.css" />
+    <link rel="stylesheet" href="assets/css/templatemo-villa-agency.css" />
+    <link rel="stylesheet" href="assets/css/owl.css" />
+    <link rel="stylesheet" href="assets/css/animate.css" />
+    <link
+      rel="stylesheet"
+      href="https://unpkg.com/swiper@7/swiper-bundle.min.css"
+    />
+   
+</head>
+<body>
+    <!-- ***** Preloader Start ***** -->
+<div class="js-preloader" id="js-preloader">
+<div class="preloader-inner">
+<span class="dot"></span>
+<div class="dots">
+<span></span>
+<span></span>
+<span></span>
+</div>
+</div>
+</div>
+<!-- ***** Preloader End ***** -->
+<div class="sub-header">
+<div class="container">
+<div class="row">
+<div class="col-lg-8 col-md-8">
+<ul class="info">
+<li><i class="fa fa-envelope"></i> Agrovila@gmail.com</li>
+<li><i class="fa fa-phone"></i> 82 9.9645-8890</li>
+</ul>
+</div>
+<div class="col-lg-4 col-md-4">
+<ul class="social-links">
+       <li id="loginSection">
+              <button class="login-btn" onclick="openLoginModal()">🔐 Sou agro</button>
+            </li>
+            <li id="loggedInSection" class="hidden">
+              <div class="user-info">
+                <button class="add-news-btn" onclick="openModal()">+ Adicionar Notícia</button>
+                <button class="logout-btn" onclick="logout()">Sair</button>
+              </div>
+            </li>
+<li>
+<a href="https://www.facebook.com/AgroVilaSL?rdid=IgT1ZBWNGYovFCyK&amp;share_url=https%3A%2F%2Fwww.facebook.com%2Fshare%2F1EuUhtPMrt%2F#"><i class="fab fa-facebook"></i></a>
+</li>
+<li>
+<a href="https://www.instagram.com/agrovilasl/?igsh=MWNuM3Q3MWd1a2c1ag%3D%3D#"><i class="fab fa-instagram"></i></a>
+</li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+<!-- ***** Header Area Start ***** -->
+<header class="header-area header-sticky">
+<div class="container">
+<div class="row">
+<div class="col-12">
+<nav class="main-nav">
+<!-- ***** Logo Start ***** -->
+<a class="logo" href="index.html">
+<img alt="Logo Agrovila" src="assets/images/Logo-Agrovila.png" style="width: 100px; height: auto"/>
+</a>
+<!-- ***** Logo End ***** -->
+<!-- ***** Menu Start ***** -->
+<ul class="nav">
+<li><a href="index.html">Home</a></li>
+<li><a href="properties.html">Produtos</a></li>
+<li><a href="agro-noticia.html" class="active">Notícias</a></li>
+<li><a href="property-details.html">Sobre Nós</a></li>
+<li><a href="contact.html">Contatos</a></li>
+<li><a href="termo-fomento.html">Termo de Fomento</a></li>
+<li>
+<a href="#"><i class="fa fa-user"></i>Conecte-se</a>
+</li>
+</ul>
+<a class="menu-trigger">
+<span>Menu</span>
+</a>
+<!-- ***** Menu End ***** -->
+</nav>
+</div>
+</div>
+</div>
+</header>
+
+
+
+    <div class="container">
+        <div class="news-container" id="newsContainer">
+            <!-- Notícias serão inseridas aqui dinamicamente -->
+        </div>
+    </div>
+
+    <!-- Modal para login -->
+    <div id="loginModal" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="closeLoginModal()">&times;</span>
+            <h2 style="color: #2E7D32; margin-bottom: 2rem;">🔐 Confirmar usuário</h2>
+            <form id="loginForm">
+                <div class="form-group">
+                    <label for="username">👤 Confirme o usuário:</label>
+                    <input type="text" id="username" required placeholder="Digite seu usuário...">
+                </div>
+                <div class="form-group">
+                    <label for="password">🔒 Confirme sua senha:</label>
+                    <input type="password" id="password" required placeholder="Digite sua senha...">
+                </div>
+                <div id="loginError" style="color: #e74c3c; margin-bottom: 1rem; display: none; font-weight: bold;"></div>
+                <button type="submit" class="submit-btn"> Entrar</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Modal para adicionar notícias -->
+    <div id="newsModal" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="closeModal()">&times;</span>
+            <h2 style="color: #2E7D32; margin-bottom: 2rem;">📰 Adicionar Nova Notícia</h2>
+            <form id="newsForm">
+                <div class="form-group">
+                    <label for="newsImage">🖼️ URL da Imagem:</label>
+                    <input type="url" id="newsImage" required placeholder="https://exemplo.com/imagem.jpg">
+                </div>
+                <div class="form-group">
+                    <label for="newsTitle">📝 Título:</label>
+                    <input type="text" id="newsTitle" required placeholder="Digite o título da notícia...">
+                </div>
+                <div class="form-group">
+                    <label for="newsCaption">💬 Legenda:</label>
+                    <input type="text" id="newsCaption" required placeholder="Digite a legenda...">
+                </div>
+                <div class="form-group">
+                    <label for="newsText">📄 Texto:</label>
+                    <textarea id="newsText" required placeholder="Digite o conteúdo completo da notícia..."></textarea>
+                </div>
+                <button type="submit" class="submit-btn">✨ Publicar Notícia</button>
+            </form>
+        </div>
+    </div>
+
+     <footer class="footer">
+        <div class="footer-content">
+          <div class="footer-column">
+           <a href="property-details.html"><h3>SOBRE NÓS</h3></a>
+          </div>
+
+          <div class="footer-column">
+            <h3>LINKS</h3>
+            <ul>
+              <li><a href="index.html">Home</a></li>
+              <li><a href="properties.html">Produtos</a></li>
+              <li><a href="property-details.html">Sobre nós</a></li>
+              <li><a href="termo-fomento.html">Termo de Fomento</a></li>
+            </ul>
+          </div>
+
+          <div class="footer-column">
+            <h3>SUPORTE</h3>
+            <ul>
+              <li><a href="contact.html">Contatos</a></li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="footer-bottom">
+          <div class="social-icons">
+            <a href="https://www.facebook.com/AgroVilaSL?rdid=zdSPuDAhRP9NB5AN&share_url=https%3A%2F%2Fwww.facebook.com%2Fshare%2F1YxiYerSU4%2F#"><i class="fab fa-facebook-f"></i></a>
+            <a href="#"><i class="fab fa-whatsapp"></i></a>
+            <a
+              href="https://www.instagram.com/agrovilasl/?igsh=MWNuM3Q3MWd1a2c1ag%3D%3D#"
+              ><i class="fab fa-instagram"></i
+            ></a>
+          </div>
+        </div>
+      </footer>
+
+  <script src="vendor/jquery/jquery.min.js"></script>
+<script src="vendor/bootstrap/js/bootstrap.min.js"></script>
+<script src="assets/js/isotope.min.js"></script>
+<script src="assets/js/owl-carousel.js"></script>
+<script src="assets/js/counter.js"></script>
+<script src="assets/js/custom.js"></script>
+    <script src="assets/js/noticia.js"></script>
+</body>
+</html>
