@@ -376,198 +376,186 @@ Pre-loader Style
 
 /* 
 ---------------------------------------------
-Header Style
+Header Style 
 --------------------------------------------- 
 */
 
- .header {
-            background-color: #2b8720;
-            color: white;
-            padding: 12px 0;
-            font-size: 14px;
-        }
 
-        .header-container {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 0 20px;
+       
+        .header {
+         background-color: #2b8720;
+            color: white;
+            padding: 12px 20px;
             display: flex;
             justify-content: space-between;
             align-items: center;
+            min-height: 60px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
         }
 
-        .contact-info {
+        .left-section {
             display: flex;
             align-items: center;
-            gap: 30px;
+            gap: 25px;
+            flex: 1;
         }
 
         .contact-item {
             display: flex;
             align-items: center;
             gap: 8px;
-            color: white;
-            text-decoration: none;
-            transition: opacity 0.3s ease;
+            font-size: 14px;
+            white-space: nowrap;
         }
 
-        .contact-item:hover {
-            opacity: 0.8;
-        }
-
-        .contact-icon {
+        .contact-item svg {
             width: 16px;
             height: 16px;
-            fill: white;
+            flex-shrink: 0;
         }
 
-        .social-links {
+        .right-section {
             display: flex;
             align-items: center;
             gap: 15px;
         }
 
-        .social-link {
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-weight: bold;
+            font-size: 16px;
+            white-space: nowrap;
+        }
+
+        .logo-icon {
+            width: 24px;
+            height: 24px;
+            background: #FF5722;
+            border-radius: 4px;
             display: flex;
             align-items: center;
             justify-content: center;
+            font-size: 12px;
+            font-weight: bold;
+            flex-shrink: 0;
+        }
+
+        .social-links {
+            display: flex;
+            gap: 10px;
+        }
+
+        .social-link {
             width: 32px;
             height: 32px;
-            background: rgba(255, 255, 255, 0.1);
             border-radius: 50%;
-            color: white;
-            text-decoration: none;
-            transition: all 0.3s ease;
-            border: 1px solid rgba(255, 255, 255, 0.2);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: opacity 0.3s ease;
+            flex-shrink: 0;
         }
 
         .social-link:hover {
-            background: rgba(255, 255, 255, 0.2);
-            transform: translateY(-2px);
+            opacity: 0.8;
         }
 
-        .social-icon {
+        .facebook {
+         background-color: #4c9d50;
+        }
+
+        .instagram {
+          background-color: #4c9d50;
+        }
+
+        .social-link svg {
             width: 18px;
             height: 18px;
             fill: white;
         }
 
-        /* Responsividade - mantendo tudo em uma linha */
+        /* Responsividade */
         @media (max-width: 768px) {
-            .header-container {
-                padding: 0 10px;
-                gap: 10px;
-            }
-
-            .contact-info {
-                gap: 10px;
-            }
-
             .header {
-                font-size: 12px;
-                padding: 8px 0;
+                padding: 10px 15px;
+                gap: 10px;
             }
+            
+            .left-section {
+                gap: 15px;
+            }
+            
+            .contact-item {
+                font-size: 13px;
+            }
+            
+            .logo {
+                font-size: 15px;
+            }
+            
+            .right-section {
+                gap: 10px;
+            }
+        }
 
+        @media (max-width: 600px) {
+            .header {
+                padding: 8px 12px;
+            }
+            
+            .left-section {
+                gap: 12px;
+            }
+            
+            .contact-item {
+                font-size: 12px;
+            }
+            
+            .contact-item svg {
+                width: 14px;
+                height: 14px;
+            }
+            
+            .logo {
+                font-size: 14px;
+            }
+            
+            .logo-icon {
+                width: 20px;
+                height: 20px;
+                font-size: 10px;
+            }
+            
             .social-link {
                 width: 28px;
                 height: 28px;
             }
-
-            .social-icon {
+            
+            .social-link svg {
                 width: 16px;
                 height: 16px;
             }
-
-            .social-links {
-                gap: 8px;
-            }
         }
 
-        @media (max-width: 580px) {
-            .header-container {
-                padding: 0 8px;
+        @media (max-width: 480px) {
+            .left-section {
                 gap: 8px;
-            }
-
-            .contact-info {
-                gap: 8px;
-                font-size: 11px;
-            }
-
-            .contact-item {
-                gap: 4px;
-            }
-
-            .contact-icon {
-                width: 14px;
-                height: 14px;
-            }
-
-            .social-link {
-                width: 24px;
-                height: 24px;
-            }
-
-            .social-icon {
-                width: 14px;
-                height: 14px;
-            }
-
-            .social-links {
-                gap: 6px;
-            }
-        }
-
-        @media (max-width: 400px) {
-            .header-container {
-                padding: 0 5px;
-                gap: 5px;
-            }
-
-            .contact-info {
-                gap: 5px;
-                font-size: 10px;
-            }
-
-            .contact-item {
-                gap: 3px;
-            }
-
-            .contact-icon {
-                width: 12px;
-                height: 12px;
-            }
-
-            .social-link {
-                width: 20px;
-                height: 20px;
-            }
-
-            .social-icon {
-                width: 12px;
-                height: 12px;
-            }
-
-            .social-links {
-                gap: 4px;
-            }
-
-            .header {
-                padding: 6px 0;
-            }
-        }
-
-        @media (max-width: 320px) {
-            .contact-info {
-                font-size: 9px;
             }
             
-            .contact-icon {
-                width: 10px;
-                height: 10px;
+            .contact-item span {
+                display: none;
+            }
+            
+            .contact-item {
+                font-size: 0;
+            }
+            
+            .right-section {
+                gap: 8px;
             }
         }
-
 
 .background-header {
   background-color: #ffffff;
