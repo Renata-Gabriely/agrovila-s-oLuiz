@@ -262,9 +262,6 @@
 
 /* Responsividade */
 @media (max-width: 768px) {
-    .header {
-        padding: 1rem;
-    }
 
     .logo {
         font-size: 1.5rem;
@@ -272,7 +269,6 @@
 
     .container {
         padding: 1rem;
-        margin-top: 80px;
     }
 
     .news-title {
