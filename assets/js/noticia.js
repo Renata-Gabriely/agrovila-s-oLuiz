@@ -3,10 +3,9 @@ document.addEventListener('DOMContentLoaded', () => {
   // --- Config ---
   window.isLoggedIn = false;
   const validCredentials = { username: 'adm', password: '@agrovila25luiz' };
-  const storageKey = 'agrovila_news_v1';
 
-  // inicializa notícias (carrega do localStorage se existir)
-  let news = JSON.parse(localStorage.getItem(storageKey)) || [
+  // inicializa notícias (sempre começa com esta lista)
+  let news = [
     {
       id: 1,
       image: "https://horadecodar.com.br/wp-content/uploads/2023/03/programacao-no-dia-a-dia.jpg",
@@ -18,12 +17,7 @@ document.addEventListener('DOMContentLoaded', () => {
   ];
 
   // --- Helpers ---
-  function saveNews() {
-    localStorage.setItem(storageKey, JSON.stringify(news));
-  }
-
   function showNotification(message, type = 'info') {
-    // remove notificação anterior
     const existing = document.querySelector('.notification');
     if (existing) existing.remove();
 
@@ -94,7 +88,6 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   }
 
-  // Função pública para deletar (exposta para debug)
   window.deleteNewsById = function(id) {
     if (!isLoggedIn) {
       showNotification('🔐 Faça login para gerenciar notícias!', 'error');
@@ -106,7 +99,6 @@ document.addEventListener('DOMContentLoaded', () => {
     }
     if (confirm('Tem certeza que deseja excluir esta notícia?')) {
       news = news.filter(item => item.id !== id);
-      saveNews();
       renderNews();
       showNotification('🗑️ Notícia excluída com sucesso!', 'info');
     }
@@ -123,12 +115,11 @@ document.addEventListener('DOMContentLoaded', () => {
       date: new Date().toLocaleDateString('pt-BR', { day: 'numeric', month: 'long', year: 'numeric' })
     };
     news.unshift(newNews);
-    saveNews();
     renderNews();
   }
-  window.addNews = addNews; // opcional
+  window.addNews = addNews;
 
-  // --- Login / Logout / Modais (expostos para os onclick do HTML) ---
+  // --- Login / Logout / Modais ---
   window.openLoginModal = function() {
     document.getElementById('loginModal').style.display = 'block';
     document.body.style.overflow = 'hidden';
@@ -233,9 +224,8 @@ document.addEventListener('DOMContentLoaded', () => {
   updateUIForAuth();
   renderNews();
 
-  // Debug helpers (opcionais)
+  // Debug helpers
   window.__debug = {
-    getNews: () => news,
-    clearNewsStorage: () => { localStorage.removeItem(storageKey); news = []; renderNews(); }
+    getNews: () => news
   };
 });
