@@ -636,26 +636,30 @@ Header Style
   letter-spacing: 0.25px;
 }
 
-.header-area .main-nav .nav li:last-child a {
+.right-section ul li a {
   background-color: #4CAF50;
   color: #e8e8e8;
   font-size: 14px;
   font-weight: 400;
   text-transform: none;
   border-radius: 20px;
-  padding-left: 0px;
+  padding: 10px 20px;
+  margin-left: 5px;
 }
 
-.header-area .main-nav .nav li:last-child a i {
+.conect a i {
   color: #e6e6e6;
   display: inline-block;
-  width: 40px;
+  width: 20px;
   height: 40px;
   text-align: center;
   line-height: 40px;
-  margin-right: 10px;
   border-radius: 50%;
-  margin-left: -1px;
+  margin-right: 5px;
+}
+
+.right-section ul li a:hover{
+  background-color: #237828;
 }
 
 .header-area .main-nav .nav li:last-child:hover a {
