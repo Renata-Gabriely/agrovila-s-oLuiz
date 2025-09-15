@@ -9,7 +9,7 @@
     font-weight: bold;
     transition: all 0.3s ease;
     box-shadow: 0 4px 15px rgba(76, 175, 80, 0.3);
-    padding: 10px 20px; /* Ajuste de padding para botões */
+    padding: 5px; /* Ajuste de padding para botões */
     margin-left: 10px; /* Adicionado para espaçamento */
 }
 
