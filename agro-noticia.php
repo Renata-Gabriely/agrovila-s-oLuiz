@@ -1,9 +1,26 @@
+<?php
+require "src/conexao-bd.php";
+require "src/modelo/Noticia.php";
+require "src/repositorio/NoticiaRepositorio.php";
+
+$noticiaRepositorio = new NoticiaRepositorio($pdo);
+$dadosNoticia = $noticiaRepositorio->noticias();
+
+
+function gerarId() {
+    static $id = 0;
+    return ++$id;
+}
+?>
+
+
+
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>AgroNews - Notícias do Agronegócio</title>
+    <title>Agrovila São Luiz - Cursos</title>
     
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@100;200;300;400;500;600;700;800;900&display=swap" rel="stylesheet" />
     <link rel="icon" href="assets/images/favicon_green.ico" type="image/x-icon">
@@ -47,9 +64,11 @@
         </div>
         
         <div class="right-section">
-             <li id="loginSection">
-                <button class="login-btn" onclick="openLoginModal()">🔐 Sou agro</button>
+            <ul>
+             <li>
+                        <a href="#"><i class="fa fa-user"></i>  Conecte-se</a>
             </li>
+            </ul>
             <li id="loggedInSection" class="hidden">
                 <div class="user-info">
                     <button class="add-news-btn" onclick="openModal()">+ Adicionar Notícia</button>
@@ -82,12 +101,13 @@
                             <img alt="Logo Agrovila" src="assets/images/Logo-Agrovila.png" style="width: 100px; height: auto"/>
                         </a>
                         <ul class="nav">
-                            <li><a href="index.html">Home</a></li>
-                            <li><a href="properties.html">Produtos</a></li>
-                            <li><a href="agro-noticia.html" class="active">Notícias</a></li>
+                            <li><a href="index.php">Home</a></li>
+                            <li><a href="properties.php">Produtos</a></li>
+                            <li><a href="cursos.php">Cursos</a></li>
+                            <li><a href="agro-noticia.php" class="active">Notícias</a></li>
                             <li><a href="property-details.html">Sobre Nós</a></li>
                             <li><a href="contact.html">Contatos</a></li>
-                            <li><a href="termo-fomento.html">Termo de Fomento</a></li>
+                            <li><a href="termo-fomento.php">Termo de Fomento</a></li>
                         </ul>
                         <a class="menu-trigger">
                             <span>Menu</span>
@@ -98,10 +118,48 @@
         </div>
     </header>
 
-    <div class="container">
-        <div class="news-container" id="newsContainer">
-            </div>
+    <div class="page-heading header-text">
+      <div class="container">
+        <div class="row">
+          <div class="col-lg-12">
+            <span class="breadcrumb"
+              ><a href="#">Home</a> / Notícias</span
+            >
+            <h3>Saiba Nossas Notícias</h3>
+          </div>
+        </div>
+      </div>
     </div>
+
+   <div class="container">
+    <div class="news-container" id="newsContainer">
+        <?php if (!empty($dadosNoticia) && is_array($dadosNoticia)): ?>
+            <?php foreach ($dadosNoticia as $noticia): ?>
+                <article class="news-item">
+                    <img src="<?= htmlspecialchars($noticia->getImg()) ?>" class="news-image" alt="Imagem da notícia">
+                    
+                    <div class="news-content">
+                        <h1 class="news-title">
+                            <?= htmlspecialchars($noticia->getTitulo()) ?>
+                        </h1>
+
+                        <div class="news-text">
+                            <?= nl2br(htmlspecialchars($noticia->getDescricao())) ?>
+                        </div>
+                    </div>
+                </article>
+            <?php endforeach; ?>
+        <?php else: ?>
+            <div class="empty-state">
+                <h2>Sem notícias no momento</h2>
+                <p>Volte em breve para novas atualizações.</p>
+            </div>
+        <?php endif; ?>
+    </div>
+</div>
+
+
+
 
     <div id="loginModal" class="modal">
         <div class="modal-content">
@@ -187,6 +245,5 @@
     <script src="assets/js/owl-carousel.js"></script>
     <script src="assets/js/counter.js"></script>
     <script src="assets/js/custom.js"></script>
-    <script src="assets/js/noticia.js"></script>
 </body>
 </html>

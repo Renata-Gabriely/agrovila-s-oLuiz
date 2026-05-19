@@ -1,3 +1,37 @@
+
+<?php
+require "src/conexao-bd.php";
+require "src/modelo/Produto.php";
+require "src/repositorio/ProdutoRepositorio.php";
+
+$repositorio = new ProdutoRepositorio($pdo);
+$mensagem = "";
+
+// Salvar produto
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    $nome = $_POST['nome'] ?? '';
+    $categoria = $_POST['categoria'] ?? '';
+    $preco = isset($_POST['preco']) ? (float)$_POST['preco'] : 0.0;
+
+    $imgPath = "uploads/default.jpg";
+    if (isset($_FILES['img']) && $_FILES['img']['error'] === UPLOAD_ERR_OK) {
+        $arquivoTmp = $_FILES['img']['tmp_name'];
+        $nomeArquivo = uniqid() . "_" . basename($_FILES['img']['name']);
+        if (!is_dir('uploads')) mkdir('uploads', 0755, true);
+        $destino = "uploads/" . $nomeArquivo;
+        if (move_uploaded_file($arquivoTmp, $destino)) {
+            $imgPath = $destino;
+        }
+    }
+
+    $produto = new Produto(0, $nome, $categoria, $preco, $imgPath);
+    $repositorio->salvarProduto($produto);
+    $mensagem = "Produto salvo com sucesso!";
+}
+
+// Lista todos os produtos
+$produtos = $repositorio->produtos();
+?>
 <!DOCTYPE html>
 
 <html lang="en">
@@ -50,7 +84,11 @@ https://templatemo.com/tm-591-villa-agency
                     <path d="M6.62 10.79c1.44 2.83 3.76 5.14 6.59 6.59l2.2-2.2c.27-.27.67-.36 1.02-.24 1.12.37 2.33.57 3.57.57.55 0 1 .45 1 1V20c0 .55-.45 1-1 1-9.39 0-17-7.61-17-17 0-.55.45-1 1-1h3.5c.55 0 1 .45 1 1 0 1.25.2 2.45.57 3.57.11.35.03.74-.25 1.02l-2.2 2.2z"/>
                 </svg>
                 <span>82 9.9645-8890</span>
+              
             </div>
+               <span>
+                <a href="./admin.php">admin</a>
+            </span>
         </div>
         
         <div class="right-section">
@@ -87,12 +125,13 @@ https://templatemo.com/tm-591-villa-agency
 <!-- ***** Logo End ***** -->
 <!-- ***** Menu Start ***** -->
 <ul class="nav">
-<li><a class="active" href="index.html">Home</a></li>
-<li><a href="properties.html">Produtos</a></li>
-<li><a href="agro-noticia.html">Notícias</a></li>
+<li><a class="active" href="index.php">Home</a></li>
+<li><a href="properties.php">Produtos</a></li>
+<li><a href="cursos.php">Cursos</a></li>
+<li><a href="agro-noticia.php">Notícias</a></li>
 <li><a href="property-details.html">Sobre Nós</a></li>
 <li><a href="contact.html">Contatos</a></li>
-<li><a href="termo-fomento.html">Termo de Fomento</a></li>
+<li><a href="termo-fomento.php">Termo de Fomento</a></li>
 </ul>
 <a class="menu-trigger">
 <span>Menu</span>
@@ -345,17 +384,20 @@ https://templatemo.com/tm-591-villa-agency
 </div>
 </div>
 <div class="video-content">
-<div class="container">
-<div class="row">
-<div class="col-lg-10 offset-lg-1">
-<div class="video-frame">
-<img alt="" src="assets/images/video-frame.jpg"/>
-<a href="https://youtube.com" target="_blank"><i class="fa fa-play"></i></a>
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-10 offset-lg-1">
+        <div class="video-frame">
+          <video width="100%" height="500" controls poster="assets/images/video-frame.jpg">
+            <source src="assets/videos/apresentacao.mp4" type="video/mp4">
+            Seu navegador não suporta a reprodução de vídeos.
+          </video>
+        </div>
+      </div>
+    </div>
+  </div>
 </div>
-</div>
-</div>
-</div>
-</div>
+
 <div class="fun-facts">
 <div class="container">
 <div class="row">
@@ -445,9 +487,7 @@ https://templatemo.com/tm-591-villa-agency
                           símbolo de cooperação e cuidado coletivo. É um ponto
                           de união e valorização da produção local.
                         </p>
-<div class="icon-button">
-<a href="property-details.html"><i class="fa fa-calendar"></i> Agende sua visita</a>
-</div>
+
 </div>
 </div>
 </div>
@@ -475,9 +515,6 @@ https://templatemo.com/tm-591-villa-agency
                           <br/><br/>Esses itens permitem agilidade na produção
                           e padronização na qualidade dos produtos.
                         </p>
-<div class="icon-button">
-<a href="property-details.html"><i class="fa fa-calendar"></i> Agende sua visita</a>
-</div>
 </div>
 </div>
 </div>
@@ -509,9 +546,6 @@ https://templatemo.com/tm-591-villa-agency
                           <br/><br/>A cozinha da Agrovila São Luiz se destaca
                           pela organização, limpeza e estrutura moderna.
                         </p>
-<div class="icon-button">
-<a href="property-details.html"><i class="fa fa-calendar"></i> Agende sua visita</a>
-</div>
 </div>
 </div>
 </div>
@@ -532,89 +566,32 @@ https://templatemo.com/tm-591-villa-agency
 </div>
 </div>
 </div>
-<div class="row">
-<div class="col-lg-4 col-md-6">
-<div class="item">
-<a href="properties.html"><img alt="" src="assets/images/macaxeira.jpg"/></a>
-<span class="category">Macaxeira</span>
-<h6>R$ 20,00</h6>
-<h4>
-<a href="properties.html">Macaxeira a Vácuo</a>
-</h4>
-<div class="main-button">
-<a href="properties.html">COMPRAR</a>
+<div class="row properties-box">
+  <?php foreach(array_slice($produtos, 0, 6) as $p): ?>
+  <div class="col-lg-4 col-md-6 align-self-center mb-30 properties-items">
+      <div class="item">
+          <a href="property-details.html">
+              <img src="<?= htmlspecialchars($p->getImg()) ?>" alt="<?= htmlspecialchars($p->getNome()) ?>" />
+          </a>
+          <span class="category"><?= htmlspecialchars($p->getCategoria()) ?></span>
+          <h6>R$ <?= number_format($p->getPreco(), 2, ',', '.') ?></h6>
+          <h4>
+              <a href="property-details.html"><?= htmlspecialchars($p->getNome()) ?></a>
+          </h4>
+          <div class="main-button">
+              <a href="property-details.html">COMPRAR</a>
+          </div>
+      </div>
+  </div>
+  <?php endforeach; ?>
+</div>
+
+
+
 </div>
 </div>
-</div>
-<div class="col-lg-4 col-md-6">
-<div class="item">
-<a href="properties.html"><img alt="" src="assets/images/bolo-de-macaxeira-pequeno.jpg"/></a>
-<span class="category">Mine Bolo de Macaxeira</span>
-<h6>R$ 20,00</h6>
-<h4>
-<a href="properties.html">Bolo de Macaxeira</a>
-</h4>
-<div class="main-button">
-<a href="properties.html">COMPRAR</a>
-</div>
-</div>
-</div>
-<div class="col-lg-4 col-md-6">
-<div class="item">
-<a href="properties.html"><img alt="" src="assets/images/chips-de-batata.jpg"/></a>
-<span class="category">Chips de Batata</span>
-<h6>R$ 20,00</h6>
-<h4>
-<a href="properties.html">Chips de Batata</a>
-</h4>
-<div class="main-button">
-<a href="properties.html">COMPRAR</a>
-</div>
-</div>
-</div>
-<div class="col-lg-4 col-md-6">
-<div class="item">
-<a href="properties.html"><img alt="" src="assets/images/pao.jpeg"/></a>
-<span class="category">Pão</span>
-<h6>R$ 20,00</h6>
-<h4>
-<a href="properties.html">Pão</a>
-</h4>
-<div class="main-button">
-<a href="properties.html">COMPRAR</a>
-</div>
-</div>
-</div>
-<div class="col-lg-4 col-md-6">
-<div class="item">
-<a href="properties.html"><img alt="" src="assets/images/biscoito.jpg"/></a>
-<span class="category">Biscoito</span>
-<h6>R$ 20,00</h6>
-<h4>
-<a href="properties.html">Biscoito</a>
-</h4>
-<div class="main-button">
-<a href="properties.html">COMPRAR</a>
-</div>
-</div>
-</div>
-<div class="col-lg-4 col-md-6">
-<div class="item">
-<a href="properties.html"><img alt="" src="assets/images/bolo-de-massa-puba.jpg"/></a>
-<span class="category">Bolo de Massa Puba</span>
-<h6>R$ 20,00</h6>
-<h4>
-<a href="properties.html">Bolo de Massa Puba</a>
-</h4>
-<ul>
-<div class="main-button">
-<a href="properties.html">COMPRAR</a>
-</div>
-</div>
-</div>
-</div>
-</div>
-</div>
+
+
 <div class="contact section">
 <div class="container">
 <div class="row">

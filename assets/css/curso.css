@@ -1,0 +1,172 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: "Poppins", sans-serif;
+}
+
+/* --- CONTAINER PRINCIPAL --- */
+.container-cursos {
+    margin-bottom: 80px; 
+    margin: 5% auto 0 auto;
+    width: 100%;
+    max-width: 900px;
+    background: #fff; /* garante que nada "vaze" */
+}
+
+
+/* 🔥 NOVO: caixa geral de cada curso com maior espaçamento */
+.curso-box {
+    margin-bottom: 40px;
+    background: #ffffff;
+    overflow: visible;
+    margin-bottom: 50px;
+}
+
+/* --- CABEÇALHO DO CONTAINER --- */
+.container-header {
+    padding: 24px;
+    cursor: pointer;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: linear-gradient(135deg, #6DBE45 0%, #2E7D32 100%); /* Verde claro e escuro */
+    color: white;
+    box-shadow: 0 4px 14px rgba(0, 0, 0, 0.15);
+    transition: all 0.3s ease;
+     border-radius: 12px 12px 0 0; /* topo arredondado apenas */
+}
+
+.container-header:hover {
+    background: linear-gradient(135deg, #558C2A 0%, #2E7D32 100%); /* Alterando a cor para escurecer um pouco */
+    transform: translateY(-2px);
+}
+
+.header-content {
+    flex: 1;
+}
+
+.container-title {
+    font-size: 26px;
+    font-weight: 700;
+    margin-bottom: 6px;
+}
+
+.container-id {
+    font-size: 13px;
+    opacity: 0.85;
+    margin-bottom: 8px;
+    font-family: 'Courier New', monospace;
+}
+
+.container-description {
+    font-size: 15px;
+    opacity: 0.95;
+    line-height: 1.5;
+}
+
+/* --- SETA --- */
+.arrow {
+    width: 40px;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    font-size: 26px;
+    transition: transform 0.3s ease;
+}
+
+.arrow.rotated {
+    transform: rotate(180deg);
+}
+
+/* --- CONTEÚDO EXPANDÍVEL --- */
+.links-container {
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.4s ease;
+    padding-bottom: 0 !important; /* FIX */
+}
+
+.links-container.expanded {
+    max-height: 600px;
+}
+
+.links-content {
+    padding: 24px;
+    padding-bottom: 35px; /* FIX DO ESPAÇO */
+    border-radius: 0 0 12px 12px;
+    background: #F1F8E9; /* NOVO FUNDO */
+    box-shadow: 0 4px 14px rgba(0, 0, 0, 0.10);
+}
+
+/* --- LINKS --- */
+.link-item {
+    display: block;
+    padding: 18px;
+    margin-bottom: 14px;
+
+    background: #F5F5F5; /* Fundo suave */
+    border-radius: 10px;
+    text-decoration: none;
+    color: #333;
+
+    border-left: 5px solid #757575c1; /* Bordas marrons */
+    transition: all 0.25s ease;
+
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+}
+
+.link-item:last-child {
+    margin-bottom: 0;
+}
+
+.link-item a:hover {
+    background: #13740ca4;
+    color: white;
+    transform: translateX(10px);
+    box-shadow: 0 6px 16px rgba(153, 237, 191, 0.3);
+}
+
+.link-title {
+    font-weight: 600;
+    font-size: 17px;
+    margin-bottom: 6px;
+}
+
+.link-description {
+    font-size: 14px;
+    opacity: 0.85;
+}
+
+footer{
+    margin-top: 80px;
+}
+
+/* ===== COR DOS ÍCONES DAS REDES SOCIAIS ===== */
+footer .footer-buttons .social-icons a {
+    color: #ffffff;        /* cor do ícone */
+    font-size: 18px;
+    margin: 0 10px;
+    transition: 0.3s;
+}
+
+footer .footer-buttons .social-icons a:hover {
+    color: #ffffff;      
+}
+
+/* --- RESPONSIVIDADE --- */
+@media (max-width: 600px) {
+    .container-title {
+        font-size: 20px;
+    }
+
+    .container-header {
+        padding: 18px;
+    }
+
+    .links-content {
+        padding: 18px;
+    }
+}

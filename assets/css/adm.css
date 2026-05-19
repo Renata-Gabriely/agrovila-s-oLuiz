@@ -1,0 +1,341 @@
+
+.card {
+    background: white;
+    border-radius: 15px;
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.08);
+    margin: 30px auto;
+    max-width: 1400px;
+    overflow: hidden;
+    animation: fadeInUp 0.6s ease;
+}
+
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(30px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.card-header {
+    background: linear-gradient(135deg, #2e7d32 0%, #1b5e20 100%);
+    padding: 25px 30px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 15px;
+}
+
+.card-title {
+    color: white;
+    font-size: 24px;
+    font-weight: 600;
+    margin: 0;
+}
+
+.btn-add {
+    background: white;
+    color: #2e7d32;
+    border: none;
+    padding: 12px 25px;
+    border-radius: 8px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    font-size: 15px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+}
+
+.btn-add:hover {
+    background: #f1f8e9;
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.15);
+}
+
+/* ========================================
+   TABELA
+======================================== */
+.table-container {
+    overflow-x: auto;
+    padding: 20px;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    background: white;
+}
+
+thead {
+    background: linear-gradient(135deg, #43a047 0%, #2e7d32 100%);
+}
+
+thead tr th {
+    color: white;
+    padding: 18px 15px;
+    text-align: left;
+    font-weight: 600;
+    font-size: 14px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+tbody tr {
+    border-bottom: 1px solid #e0e0e0;
+    transition: all 0.3s ease;
+}
+
+tbody tr:hover {
+    background: #f1f8e9;
+    transform: scale(1.01);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.05);
+}
+
+tbody tr:last-child {
+    border-bottom: none;
+}
+
+tbody td {
+    padding: 18px 15px;
+    font-size: 14px;
+    color: #333;
+    vertical-align: middle;
+}
+
+.url-link {
+    color: #2e7d32;
+    font-size: 13px;
+    display: inline-block;
+    max-width: 300px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.btn-delete {
+    background: linear-gradient(135deg, #d32f2f 0%, #c62828 100%);
+    color: rgb(255, 255, 255);
+    border: none;
+    padding: 8px 20px;
+    border-radius: 6px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    font-size: 13px;
+}
+
+.btn-edit{
+      background: linear-gradient(135deg, #3c1d01 0%, #3c1d01);
+      color: white;
+    border: none;
+    padding: 8px 20px;
+    border-radius: 6px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    font-size: 13px;
+}
+
+.btn-delete:hover {
+    background: linear-gradient(135deg, #c62828 0%, #b71c1c 100%);
+    box-shadow: 0 4px 12px rgba(211, 47, 47, 0.3);
+}
+
+.btn-edit:hover{
+      background: linear-gradient(135deg, #1e1500 0%, #a83800 100%);
+}
+
+.btn-view{
+    display: inline-block;
+    padding: 10px 22px;
+    border-radius: 8px;
+
+    background: linear-gradient(135deg, #2E7D32 0%, #2E7D32 100%);
+    color: #ffffff;
+    text-decoration: none;
+    font-weight: 600;
+    font-size: 14px;
+    letter-spacing: .3px;
+
+    border: none;
+    cursor: pointer;
+
+    box-shadow: 0 4px 12px rgba(46, 125, 50, 0.25);
+    transition: all 0.25s ease;
+}
+
+.btn-view:hover{
+    background: linear-gradient(135deg, #558C2A 0%, #558C2A 100%);
+    box-shadow: 0 6px 16px rgba(46, 125, 50, 0.35);
+}
+
+.btn-view:active{
+    transform: translateY(0);
+    box-shadow: 0 3px 8px rgba(46, 125, 50, 0.25);
+}
+/* ========================================
+   RESPONSIVIDADE
+======================================== */
+
+/* Tablets */
+@media (max-width: 1024px) {
+    .card {
+        margin: 20px;
+    }
+    
+    .card-title {
+        font-size: 20px;
+    }
+    
+    .table-container {
+        padding: 15px;
+    }
+}
+
+/* Smartphones - Landscape */
+@media (max-width: 768px) {
+   
+    
+    .card {
+        margin: 15px;
+        border-radius: 10px;
+    }
+    
+    .card-header {
+        padding: 20px;
+        flex-direction: column;
+        text-align: center;
+    }
+    
+    .card-title {
+        font-size: 18px;
+    }
+    
+    .btn-add {
+        width: 100%;
+        padding: 12px;
+    }
+    
+    /* Tabela responsiva */
+    .table-container {
+        padding: 10px;
+    }
+    
+    table {
+        font-size: 12px;
+    }
+    
+    thead tr th {
+        padding: 12px 8px;
+        font-size: 11px;
+    }
+    
+    tbody td {
+        padding: 12px 8px;
+        font-size: 12px;
+    }
+    
+    .url-link {
+        max-width: 150px;
+    }
+    
+    .btn-delete {
+        padding: 6px 12px;
+        font-size: 11px;
+    }
+}
+
+/* Smartphones - Portrait */
+@media (max-width: 576px) {
+   
+    
+    .card {
+        margin: 10px;
+        border-radius: 8px;
+    }
+    
+    .card-header {
+        padding: 15px;
+    }
+    
+    .card-title {
+        font-size: 16px;
+    }
+    
+    /* Tabela em modo cards para mobile */
+    table, thead, tbody, th, td, tr {
+        display: block;
+    }
+    
+    thead tr {
+        display: none;
+    }
+    
+    tbody tr {
+        margin-bottom: 20px;
+        border: 1px solid #e0e0e0;
+        border-radius: 8px;
+        padding: 15px;
+        background: white;
+    }
+    
+    tbody tr:hover {
+        transform: none;
+    }
+    
+    tbody td {
+        padding: 8px 0;
+        text-align: left;
+        position: relative;
+        padding-left: 50%;
+        border-bottom: 1px solid #f5f5f5;
+    }
+    
+    tbody td:last-child {
+        border-bottom: none;
+    }
+    
+    tbody td:before {
+        content: attr(data-label);
+        position: absolute;
+        left: 10px;
+        font-weight: 600;
+        color: #2e7d32;
+        text-transform: uppercase;
+        font-size: 11px;
+    }
+    
+    /* Labels para cada coluna */
+    tbody td:nth-of-type(1):before { content: "Código"; }
+    tbody td:nth-of-type(2):before { content: "URL"; }
+    tbody td:nth-of-type(3):before { content: "Título"; }
+    tbody td:nth-of-type(4):before { content: "Descrição"; }
+    tbody td:nth-of-type(5):before { content: "Ação"; }
+    
+    .url-link {
+        max-width: 100%;
+    }
+    
+    .btn-delete {
+        width: 100%;
+        margin-top: 10px;
+    }
+}
+
+/* Telas muito pequenas */
+@media (max-width: 360px) {
+   
+    
+    .card-title {
+        font-size: 14px;
+    }
+    
+    .btn-add {
+        font-size: 13px;
+        padding: 10px;
+    }
+}

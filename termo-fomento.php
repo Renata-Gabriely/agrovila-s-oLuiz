@@ -1,3 +1,14 @@
+<?php
+require "src/conexao-bd.php"; // conexão com o banco
+require "src/modelo/Fomento.php";
+require "src/repositorio/FomentoRepositorio.php";
+
+// Instancia o repositório e busca todos os fomentos
+$fomentoRepositorio = new FomentoRepositorio($pdo);
+$fomentos = $fomentoRepositorio->buscarTodos();
+?>
+
+
 <!DOCTYPE html>
 <html lang="en">
   <head>
@@ -12,7 +23,7 @@
     />
     <link rel="icon" href="assets/images/favicon_green.ico" type="image/x-icon">
 
-    <title>Agrovila São Luiz - Produtos</title>
+    <title>Agrovila São Luiz - Sobre Nós</title>
 
     <!-- Bootstrap core CSS -->
     <link href="vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet" />
@@ -33,6 +44,9 @@ TemplateMo 591 villa agency
 https://templatemo.com/tm-591-villa-agency
 
 -->
+  <style>
+
+  </style>
   </head>
 
   <body>
@@ -48,7 +62,6 @@ https://templatemo.com/tm-591-villa-agency
       </div>
     </div>
     <!-- ***** Preloader End ***** -->
-
 <div class="header">
         <div class="left-section">
             <div class="contact-item">
@@ -97,7 +110,7 @@ https://templatemo.com/tm-591-villa-agency
           <div class="col-12">
             <nav class="main-nav">
               <!-- ***** Logo Start ***** -->
-               <a href="index.html" class="logo">
+              <a href="index.html" class="logo">
                 <img
                   src="assets/images/Logo-Agrovila.png"
                   alt="Logo Agrovila"
@@ -107,12 +120,15 @@ https://templatemo.com/tm-591-villa-agency
               <!-- ***** Logo End ***** -->
               <!-- ***** Menu Start ***** -->
               <ul class="nav">
-                <li><a href="index.html">Home</a></li>
-                <li><a href="properties.html" class="active">Produtos</a></li>
-                <li><a href="agro-noticia.html">Notícias</a></li>
-                <li><a href="property-details.html">Sobre Nós</a></li>
+                <li><a href="index.php">Home</a></li>
+                <li><a href="properties.php">Produtos</a></li>
+                 <li><a href="cursos.php">Cursos</a></li>
+                <li><a href="agro-noticia.php">Notícias</a></li>
+                <li>
+                  <a href="property-details.html">Sobre Nós</a>
+                </li>
                 <li><a href="contact.html">Contatos</a></li>
-                <li><a href="contact.html">Termo de Fomento</a></li>
+                <li><a href="termo-fomento.php" class="active">Termo de Fomento</a></li>
               </ul>
               <a class="menu-trigger">
                 <span>Menu</span>
@@ -129,198 +145,41 @@ https://templatemo.com/tm-591-villa-agency
       <div class="container">
         <div class="row">
           <div class="col-lg-12">
-            <span class="breadcrumb"><a href="#">Home</a> / Produtos</span>
-            <h3>Nossos Produtos</h3>
+            <span class="breadcrumb"
+              ><a href="#">Home</a> / Termo de Fomento</span
+            >
+            <h3>Termo de Fomento</h3>
           </div>
         </div>
       </div>
     </div>
 
-    <div class="section properties">
-      <div class="container">
-        <ul class="properties-filter">
-          <li>
-            <a class="is_active" href="#!" data-filter="*">Todos</a>
-          </li>
-          <li>
-            <a href="#!" data-filter=".adv">+ vendidos</a>
-          </li>
-        </ul>
-        <div class="row properties-box">
-          <div
-            class="col-lg-4 col-md-6 align-self-center mb-30 properties-items col-md-6 adv"
-          >
-            <div class="item">
-              <a href="property-details.html"
-                ><img src="assets/images/macaxeira.jpg" alt=""
-              /></a>
-              <span class="category">Macaxeira</span>
-              <h6>R$ 20,00</h6>
-              <h4>
-                <a href="property-details.html"
-                  >Macaxeira a vácuo</a
-                >
-              </h4>
-              <div class="main-button">
-                <a href="property-details.html">COMPRAR</a>
-              </div>
-            </div>
-          </div>
-          <div
-            class="col-lg-4 col-md-6 align-self-center mb-30 properties-items col-md-6 str"
-          >
-            <div class="item">
-              <a href="property-details.html"
-                ><img src="assets/images/tapioca.jpg" alt=""
-              /></a>
-              <span class="category">Tapioca</span>
-              <h6>R$ 20,00</h6>
-              <h4>
-                <a href="property-details.html"
-                  >Tapioca</a
-                >
-              </h4>
-              <div class="main-button">
-                <a href="property-details.html">COMPRAR</a>
-              </div>
-            </div>
-          </div>
-          <div
-            class="col-lg-4 col-md-6 align-self-center mb-30 properties-items col-md-6 adv rac"
-          >
-            <div class="item">
-              <a href="property-details.html"
-                ><img src="assets/images/chips-de-batata.jpg" alt=""
-              /></a>
-              <span class="category">Chips de Batata</span>
-              <h6>R$ 20,00</h6>
-              <h4>
-                <a href="property-details.html"
-                  >Chips de Batata</a
-                >
-              </h4>
-              <div class="main-button">
-                <a href="property-details.html">COMPRAR</a>
-              </div>
-            </div>
-          </div>
-          <div
-            class="col-lg-4 col-md-6 align-self-center mb-30 properties-items col-md-6 str"
-          >
-            <div class="item">
-              <a href="property-details.html"
-                ><img src="assets/images/pao.jpeg" alt=""
-              /></a>
-              <span class="category">Pão</span>
-              <h6>R$ 20,00</h6>
-              <h4>
-                <a href="property-details.html"
-                  >Pão</a
-                >
-              </h4>
-              <div class="main-button">
-                <a href="property-details.html">COMPRAR</a>
-              </div>
-            </div>
-          </div>
-          <div
-            class="col-lg-4 col-md-6 align-self-center mb-30 properties-items col-md-6 rac str"
-          >
-            <div class="item">
-              <a href="property-details.html"
-                ><img src="assets/images/bolo-de-milho.jpg" alt=""
-              /></a>
-              <span class="category">Bolo de Milho</span>
-              <h6>R$ 20,00</h6>
-              <h4>
-                <a href="property-details.html"
-                  >Bolo de Milho</a
-                >
-              </h4>
-              <div class="main-button">
-                <a href="property-details.html">COMPRAR</a>
-              </div>
-            </div>
-          </div>
-          <div
-            class="col-lg-4 col-md-6 align-self-center mb-30 properties-items col-md-6 rac adv"
-          >
-            <div class="item">
-              <a href="property-details.html"
-                ><img src="assets/images/bolo-de-massa-puba.jpg" alt=""
-              /></a>
-              <span class="category">Bolo</span>
-              <h6>R$ 20,00</h6>
-              <h4>
-                <a href="property-details.html"
-                  >Bolo de Massa Puba</a
-                >
-              </h4>
-              <div class="main-button">
-                <a href="property-details.html">COMPRAR</a>
-              </div>
-            </div>
-          </div>
-          <div
-            class="col-lg-4 col-md-6 align-self-center mb-30 properties-items col-md-6 rac str"
-          >
-            <div class="item">
-              <a href="property-details.html"
-                ><img src="assets/images/bolo-de-macaxeira-pequeno.jpg" alt=""
-              /></a>
-              <span class="category">Mine Bolo de Macaxeira</span>
-              <h6>R$ 20,00</h6>
-              <h4>
-                <a href="property-details.html"
-                  >Bolo de Macaxeira</a
-                >
-              </h4>
-              <div class="main-button">
-                <a href="property-details.html">COMPRAR</a>
-              </div>
-            </div>
-          </div>
-          <div
-            class="col-lg-4 col-md-6 align-self-center mb-30 properties-items col-md-6 rac adv"
-          >
-            <div class="item">
-              <a href="property-details.html"
-                ><img src="assets/images/biscoito.jpg" alt=""
-              /></a>
-              <span class="category">Biscoito</span>
-              <h6>R$ 20,00</h6>
-              <h4>
-                <a href="property-details.html"
-                  >Biscoito</a
-                >
-              </h4>
-              <div class="main-button">
-                <a href="property-details.html">COMPRAR</a>
-              </div>
-            </div>
-          </div>
-          <div
-            class="col-lg-4 col-md-6 align-self-center mb-30 properties-items col-md-6 rac adv"
-          >
-            <div class="item">
-              <a href="property-details.html"
-                ><img src="assets/images/bolo-de-macaxeira.jpg" alt=""
-              /></a>
-              <span class="category">Bolo de Macaxeira</span>
-              <h6>R$ 20,00</h6>
-              <h4>
-                <a href="property-details.html"
-                  >Bolo de Macaxeira</a
-                >
-              </h4>
-              <div class="main-button">
-                <a href="property-details.html">COMPRAR</a>
-              </div>
-            </div>
-          </div>
+    <div class="container">
+        <div class="grid">
+            <!-- Card 1 -->
+         <div class="fomento-container">
+<?php foreach ($fomentos as $fomento) { ?>
+    <div class="card">
+        <img src="<?= htmlspecialchars($fomento->getImg()) ?>" alt="<?= htmlspecialchars($fomento->getTitulo()) ?>" class="card-image">
+        <div class="card-content">
+            <h2 class="card-title"><?= htmlspecialchars($fomento->getTitulo()) ?></h2>
+            <p class="card-description"><?= htmlspecialchars($fomento->getDescricao()) ?></p>
+            <a href="<?= htmlspecialchars($fomento->getArquivo()) ?>" class="download-btn" download>
+                <svg class="download-icon" viewBox="0 0 20 20">
+                    <path d="M10 12l-5-5h3V3h4v4h3l-5 5z"/>
+                    <path d="M2 17h16v2H2z"/>
+                </svg>
+                Baixar Documento
+            </a>
         </div>
-      </div>
     </div>
+<?php } ?>
+</div>
+            </div>
+            </div>
+
+            
+
  <footer class="footer">
         <div class="footer-content">
           <div class="footer-column">
@@ -365,6 +224,5 @@ https://templatemo.com/tm-591-villa-agency
     <script src="assets/js/owl-carousel.js"></script>
     <script src="assets/js/counter.js"></script>
     <script src="assets/js/custom.js"></script>
-     <script src="assets/js/noticia.js"></script>
   </body>
 </html>

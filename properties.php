@@ -1,3 +1,38 @@
+<?php
+require "src/conexao-bd.php";
+require "src/modelo/Produto.php";
+require "src/repositorio/ProdutoRepositorio.php";
+
+$repositorio = new ProdutoRepositorio($pdo);
+$mensagem = "";
+
+// Salvar produto
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    $nome = $_POST['nome'] ?? '';
+    $categoria = $_POST['categoria'] ?? '';
+    $preco = isset($_POST['preco']) ? (float)$_POST['preco'] : 0.0;
+
+    $imgPath = "uploads/default.jpg";
+    if (isset($_FILES['img']) && $_FILES['img']['error'] === UPLOAD_ERR_OK) {
+        $arquivoTmp = $_FILES['img']['tmp_name'];
+        $nomeArquivo = uniqid() . "_" . basename($_FILES['img']['name']);
+        if (!is_dir('uploads')) mkdir('uploads', 0755, true);
+        $destino = "uploads/" . $nomeArquivo;
+        if (move_uploaded_file($arquivoTmp, $destino)) {
+            $imgPath = $destino;
+        }
+    }
+
+    $produto = new Produto(0, $nome, $categoria, $preco, $imgPath);
+    $repositorio->salvarProduto($produto);
+    $mensagem = "Produto salvo com sucesso!";
+}
+
+// Lista todos os produtos
+$produtos = $repositorio->produtos();
+?>
+
+
 <!DOCTYPE html>
 <html lang="en">
   <head>
@@ -12,7 +47,7 @@
     />
     <link rel="icon" href="assets/images/favicon_green.ico" type="image/x-icon">
 
-    <title>Agrovila São Luiz - Contatos</title>
+    <title>Agrovila São Luiz - Produtos</title>
 
     <!-- Bootstrap core CSS -->
     <link href="vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet" />
@@ -49,7 +84,7 @@ https://templatemo.com/tm-591-villa-agency
     </div>
     <!-- ***** Preloader End ***** -->
 
-   <div class="header">
+<div class="header">
         <div class="left-section">
             <div class="contact-item">
                 <svg viewBox="0 0 24 24" fill="currentColor">
@@ -67,7 +102,7 @@ https://templatemo.com/tm-591-villa-agency
         </div>
         
         <div class="right-section">
-        <ul>
+            <ul>
               <li>
                   <a href="#"><i class="fa fa-user"></i>  Conecte-se</a>
                 </li>
@@ -97,7 +132,7 @@ https://templatemo.com/tm-591-villa-agency
           <div class="col-12">
             <nav class="main-nav">
               <!-- ***** Logo Start ***** -->
-              <a href="index.html" class="logo">
+               <a href="index.html" class="logo">
                 <img
                   src="assets/images/Logo-Agrovila.png"
                   alt="Logo Agrovila"
@@ -108,12 +143,12 @@ https://templatemo.com/tm-591-villa-agency
               <!-- ***** Menu Start ***** -->
               <ul class="nav">
                 <li><a href="index.php">Home</a></li>
-                <li><a href="properties.php">Produtos</a></li>
+                <li><a href="properties.php" class="active">Produtos</a></li>
                  <li><a href="cursos.php">Cursos</a></li>
-                <li><a href="agro-noticia.html">Notícias</a></li>
+                <li><a href="agro-noticia.php">Notícias</a></li>
                 <li><a href="property-details.html">Sobre Nós</a></li>
-                <li><a href="contact.html" class="active">Contatos</a></li>
-                <li><a href="termo-fomento.php">Termo de Fomento</a></li>
+                <li><a href="contact.html">Contatos</a></li>
+                <li><a href="contact.html">Termo de Fomento</a></li>
               </ul>
               <a class="menu-trigger">
                 <span>Menu</span>
@@ -130,171 +165,115 @@ https://templatemo.com/tm-591-villa-agency
       <div class="container">
         <div class="row">
           <div class="col-lg-12">
-            <span class="breadcrumb"><a href="#">Home</a> / Contatos</span>
-            <h3> Contatos</h3>
+            <span class="breadcrumb"><a href="#">Home</a> / Produtos</span>
+            <h3>Nossos Produtos</h3>
           </div>
         </div>
       </div>
     </div>
 
-    <div class="contact-page section">
+    <div class="section properties">
       <div class="container">
-        <div class="row">
-          <div class="col-lg-6">
-            <div class="section-heading">
-              <h6>| Contatos</h6>
-              <h2>Deseja falar conosco?</h2>
-            </div>
-            <p>
-             Nosso objetivo é transformar a Cozinha Comunitária em um centro de produção e comercialização de alimentos, envolvendo 50 famílias de agricultores. Verificar o sucesso através da participação e desempenho nos cursos, funcionamento regular da cozinha e avaliações de satisfação e desempenho econômico social dos produtores.
-            </p>
-            <div class="row">
-              <div class="col-lg-12">
-                <div class="item phone">
-                  <img
-                    src="assets/images/phone-icon.png"
-                    alt=""
-                    style="max-width: 52px"
-                  />
-                  <h6>82 9.9645-8890<br /><span>Número para contato</span></h6>
-                </div>
-              </div>
-              <div class="col-lg-12">
-                <div class="item email">
-                  <img
-                    src="assets/images/email-icon.png"
-                    alt=""
-                    style="max-width: 52px"
-                  />
-                  <h6>info@villa.co<br /><span>E-mail para contato</span></h6>
-                </div>
-              </div>
-            </div>
-          </div>
-          <div class="col-lg-6">
-            <form id="contact-form" action="" method="post">
-              <div class="row">
-                <div class="col-lg-12">
-                  <fieldset>
-                    <label for="name">Seu Nome</label>
-                    <input
-                      type="name"
-                      name="name"
-                      id="name"
-                      placeholder="Seu nome..."
-                      autocomplete="on"
-                      required
-                    />
-                  </fieldset>
-                </div>
-                <div class="col-lg-12">
-                  <fieldset>
-                    <label for="email">Seu E-mail</label>
-                    <input
-                      type="text"
-                      name="email"
-                      id="email"
-                      pattern="[^ @]*@[^ @]*"
-                      placeholder="Seu E-mail..."
-                      required=""
-                    />
-                  </fieldset>
-                </div>
-                <div class="col-lg-12">
-                  <fieldset>
-                    <label for="subject">Assunto</label>
-                    <input
-                      type="subject"
-                      name="subject"
-                      id="subject"
-                      placeholder="Assunto..."
-                      autocomplete="on"
-                    />
-                  </fieldset>
-                </div>
-                <div class="col-lg-12">
-                  <fieldset>
-                    <label for="message">Menssagem</label>
-                    <textarea
-                      name="message"
-                      id="message"
-                      placeholder="Digite sua mensagem"
-                    ></textarea>
-                  </fieldset>
-                </div>
-                <div class="col-lg-12">
-                  <fieldset>
-                    <button
-                      type="submit"
-                      id="form-submit"
-                      class="orange-button"
-                    >
-                      Enviar
-                    </button>
-                  </fieldset>
-                </div>
-              </div>
-            </form>
-          </div>
-          <div class="col-lg-12">
-            <div id="map">
-              <iframe
-                src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3936.2296993351497!2d-36.264887225214515!3d-9.40122959067572!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x706c3f2b7f02209%3A0x2a0b9f081ab03da4!2sAgrovila%20S%C3%A3o%20Luiz!5e0!3m2!1spt-BR!2sbr!4v1750457300070!5m2!1spt-BR!2sbr"
-                width="100%"
-                height="500px"
-                frameborder="0"
-                style="
-                  border: 0;
-                  border-radius: 10px;
-                  box-shadow: 0px 0px 15px rgba(0, 0, 0, 0.15);
-                "
-                allowfullscreen=""
-              ></iframe>
-            </div>
-          </div>
+        <ul class="properties-filter">
+          <li>
+            <a class="is_active" href="#!" data-filter="*">Todos</a>
+          </li>
+          <li>
+            <a href="#!" data-filter=".bolos">+ Bolos</a>
+          </li>
+           <li>
+            <a href="#!" data-filter=".raizesederivados">+ Raízes e Derivados</a>
+          </li>
+           <li>
+            <a href="#!" data-filter=".salgados">+ Salgados</a>
+          </li>
+           <li>
+        </ul>
+
+        <div class="row properties-box">
+      <?php foreach($produtos as $p): ?>
+<div class="col-lg-4 col-md-6 align-self-center mb-30 properties-items <?= strtolower(preg_replace('/[^a-z0-9]/i', '', iconv('UTF-8', 'ASCII//TRANSLIT', $p->getCategoria()))) ?>
+">
+
+    <div class="item">
+        <a href="property-details.html">
+            <img src="<?= htmlspecialchars($p->getImg()) ?>" alt="<?= htmlspecialchars($p->getNome()) ?>" />
+        </a>
+        <span class="category"><?= htmlspecialchars($p->getCategoria()) ?></span>
+        <h6>R$ <?= number_format($p->getPreco(), 2, ',', '.') ?></h6>
+        <h4>
+            <a href="property-details.html"><?= htmlspecialchars($p->getNome()) ?></a>
+        </h4>
+        <div class="main-button">
+            <a href="property-details.html">COMPRAR</a>
         </div>
-      </div>
     </div>
-
- <footer class="footer">
+</div>
+<?php endforeach; ?>
+</div>
+</div>
+         <footer class="footer">
         <div class="footer-content">
-          <div class="footer-column">
-           <a href="property-details.html"><h3>SOBRE NÓS</h3></a>
-          </div>
+            <div class="footer-column">
+                <a href="property-details.html"><h3>SOBRE NÓS</h3></a>
+            </div>
 
-          <div class="footer-column">
-            <h3>LINKS</h3>
-            <ul>
-              <li><a href="index.html">Home</a></li>
-              <li><a href="properties.html">Produtos</a></li>
-              <li><a href="property-details.html">Sobre nós</a></li>
-              <li><a href="termo-fomento.html">Termo de Fomento</a></li>
-            </ul>
-          </div>
+            <div class="footer-column">
+                <h3>LINKS</h3>
+                <ul>
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="properties.html">Produtos</a></li>
+                    <li><a href="property-details.html">Sobre nós</a></li>
+                    <li><a href="termo-fomento.php">Termo de Fomento</a></li>
+                </ul>
+            </div>
 
-          <div class="footer-column">
-            <h3>SUPORTE</h3>
-            <ul>
-              <li><a href="contact.html">Contatos</a></li>
-            </ul>
-          </div>
+            <div class="footer-column">
+                <h3>SUPORTE</h3>
+                <ul>
+                    <li><a href="contact.html">Contatos</a></li>
+                </ul>
+            </div>
         </div>
 
         <div class="footer-bottom">
-          <div class="social-icons">
-            <a href="https://www.facebook.com/AgroVilaSL?rdid=zdSPuDAhRP9NB5AN&share_url=https%3A%2F%2Fwww.facebook.com%2Fshare%2F1YxiYerSU4%2F#"><i class="fab fa-facebook-f"></i></a>
-            <a href="#"><i class="fab fa-whatsapp"></i></a>
-            <a
-              href="https://www.instagram.com/agrovilasl/?igsh=MWNuM3Q3MWd1a2c1ag%3D%3D#"
-              ><i class="fab fa-instagram"></i
-            ></a>
-          </div>
+            <div class="social-icons">
+                <a href="https://www.facebook.com/AgroVilaSL?rdid=zdSPuDAhRP9NB5AN&share_url=https%3A%2F%2Fwww.facebook.com%2Fshare%2F1YxiYerSU4%2F#"><i class="fab fa-facebook-f"></i></a>
+                <a href="#"><i class="fab fa-whatsapp"></i></a>
+                <a href="https://www.instagram.com/agrovilasl/?igsh=MWNuM3Q3MWd1a2c1ag%3D%3D#"><i class="fab fa-instagram"></i></a>
+            </div>
         </div>
-      </footer>
-
+    </footer>
 
     <!-- Scripts -->
     <!-- Bootstrap core JavaScript -->
+     <script>
+const filterLinks = document.querySelectorAll('.properties-filter a');
+const items = document.querySelectorAll('.properties-items');
+
+filterLinks.forEach(link => {
+    link.addEventListener('click', function(e) {
+        e.preventDefault();
+
+        const filter = this.getAttribute('data-filter');
+
+        // remove active
+        filterLinks.forEach(l => l.classList.remove('is_active'));
+        this.classList.add('is_active');
+
+        items.forEach(item => {
+            if (filter === '*') {
+                item.style.display = 'block';
+            } else if (item.classList.contains(filter.replace('.', ''))) {
+                item.style.display = 'block';
+            } else {
+                item.style.display = 'none';
+            }
+        });
+    });
+});
+</script>
+
     <script src="vendor/jquery/jquery.min.js"></script>
     <script src="vendor/bootstrap/js/bootstrap.min.js"></script>
     <script src="assets/js/isotope.min.js"></script>

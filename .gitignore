@@ -1,0 +1,6 @@
+.env
+config.php
+uploads/
+*.sql
+*.mp4
+assets/videos/
